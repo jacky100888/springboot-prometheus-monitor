@@ -1,0 +1,19 @@
+groups:
+    - name: monitor
+      rules:
+      - alert: service_down
+        expr: up == 0
+        for: 2m
+        annotations:
+          summary: "service is down!"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} is down more than 2 minute."
+          username: "@channel"
+      - alert: TooManyReq
+        expr: http_server_requests_seconds_count > 100
+        for: 10s
+        labels:
+          user: test
+        annotations:
+          summary: "http_server_requests_seconds_count is too over!"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has over 100 request for more than 10 sec."
+          username: "@channel"

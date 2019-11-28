@@ -1,0 +1,19 @@
+global:
+  resolve_timeout: 2h
+
+route:
+  group_by: ['alertname']
+  group_wait: 5s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'slack'
+
+receivers:
+  - name: 'slack'
+    slack_configs:
+      - send_resolved: true
+        api_url: "https://hooks.slack.com/services/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"
+        channel: "#alert-test"
+        icon_url: "https://avatars3.githubusercontent.com/u/3380462"
+        text: "{{.CommonAnnotations.description}}"
+        title: "{{.CommonAnnotations.summary}}"
